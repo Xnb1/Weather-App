@@ -3,11 +3,12 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from "react";
 
+
 export default function SearchBox({updateInfo}) {
    let [city, setCity] = useState("");
    let [error, setError] = useState(false);
    const API_URL = "https://api.openweathermap.org/data/2.5/weather";
-   const API_KEY = "8d3651d82383fee68c96fe84bd8a0a20";
+  
 
    let getWeatherInfo = async () => {
      try {
@@ -26,6 +27,7 @@ export default function SearchBox({updateInfo}) {
         console.log(result);
         return result;
       } catch (err) {
+         
          throw err;
       }
     
@@ -42,6 +44,8 @@ export default function SearchBox({updateInfo}) {
          evt.preventDefault();
       console.log(city);
       setCity("");
+      setError(false);
+      
       let newInfo = await getWeatherInfo();
       updateInfo(newInfo);
       } catch (err) {
@@ -56,8 +60,9 @@ export default function SearchBox({updateInfo}) {
              <TextField id="outlined-basic" label="City Name" variant="outlined" value={city} onChange={handleChange} required/><br></br>
              <br></br>
              <Button type="submit" variant="contained" >Search</Button>
-            {error && <p style = {{color: "red"}}>No such place exists</p>}
-          </form>
+              {error && <p style = {{color: "red"}}>No such place exists</p>}
+              
+            </form>
        </div>
     )
 }
